@@ -67,7 +67,7 @@ class RabbitAdapter implements AdapterInterface
     public function getChannel()
     {
         if (!$this->channel) {
-            $connection = new AMQPConnection($this->config['host'], $this->config['port'], $this->config['username'], $this->config['password']);
+            $connection = new AMQPConnection($this->config['host'], $this->config['port'], $this->config['username'], $this->config['password'], $this->config['vhost']);
             $this->channel = $connection->channel();
         }
 
