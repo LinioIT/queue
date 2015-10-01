@@ -2,7 +2,7 @@
 
 namespace Linio\Component\Queue;
 
-use Linio\Component\Util\String;
+use Doctrine\Common\Inflector\Inflector;
 
 class AdapterFactory
 {
@@ -13,7 +13,7 @@ class AdapterFactory
      */
     public function getAdapter($adapterName, $adapterConfig = array())
     {
-        $adapterClass = sprintf('%s\\Adapter\\%sAdapter', __NAMESPACE__, String::pascalize($adapterName));
+        $adapterClass = sprintf('%s\\Adapter\\%sAdapter', __NAMESPACE__, Inflector::classify($adapterName));
 
         if (!class_exists($adapterClass)) {
             throw new \InvalidArgumentException('Adapter class does not exist: ' . $adapterClass);
