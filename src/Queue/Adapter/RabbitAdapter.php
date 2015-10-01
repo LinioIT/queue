@@ -33,7 +33,7 @@ class RabbitAdapter implements AdapterInterface
      */
     public function add(Job $job)
     {
-        $this->getChannel()->queue_declare($job->getQueue(), false, $job->isPersistent(), false, false);
+        $this->getChannel()->queue_declare($job->getQueue(), true, $job->isPersistent(), false, false);
         $message = new AMQPMessage($job->getPayload(), ['delivery_mode' => 2]);
         $this->getChannel()->basic_publish($message, '', $job->getQueue());
     }
@@ -43,7 +43,7 @@ class RabbitAdapter implements AdapterInterface
      */
     public function perform(Job $job)
     {
-        $this->getChannel()->queue_declare($job->getQueue(), false, $job->isPersistent(), false, false);
+        $this->getChannel()->queue_declare($job->getQueue(), true, $job->isPersistent(), false, false);
         $this->getChannel()->basic_qos(null, 1, null);
         $this->getChannel()->basic_consume($job->getQueue(), '', false, false, false, false, function ($message) use ($job) {
             $job->setPayload($message->body);
