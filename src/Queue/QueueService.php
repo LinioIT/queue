@@ -1,10 +1,10 @@
 <?php
+declare(strict_types=1);
 
 namespace Linio\Component\Queue;
 
-use Psr\Log\LoggerInterface;
-use Symfony\Component\Serializer\SerializerInterface;
 use Linio\Component\Util\Json;
+use Psr\Log\LoggerInterface;
 
 class QueueService
 {
@@ -18,12 +18,7 @@ class QueueService
      */
     protected $logger;
 
-    /**
-     * @param Job $job
-     *
-     * @return boolean
-     */
-    public function add(Job $job)
+    public function add(Job $job): bool
     {
         try {
             $this->prepare($job);
@@ -37,12 +32,7 @@ class QueueService
         return true;
     }
 
-    /**
-     * @param Job $job
-     *
-     * @return boolean
-     */
-    public function perform(Job $job)
+    public function perform(Job $job): bool
     {
         try {
             $this->adapter->perform($job);
@@ -56,9 +46,6 @@ class QueueService
         return true;
     }
 
-    /**
-     * @param Job $job
-     */
     protected function prepare(Job $job)
     {
         $payload = $job->getPayload();
@@ -68,17 +55,11 @@ class QueueService
         }
     }
 
-    /**
-     * @param AdapterInterface $adapter
-     */
     public function setAdapter(AdapterInterface $adapter)
     {
         $this->adapter = $adapter;
     }
 
-    /**
-     * @param \Psr\Log\LoggerInterface $logger
-     */
     public function setLogger(LoggerInterface $logger)
     {
         $this->logger = $logger;

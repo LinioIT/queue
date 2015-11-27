@@ -1,25 +1,20 @@
 <?php
+declare(strict_types=1);
 
 namespace Linio\Component\Queue;
 
-trait QueueTrait
+trait QueueAware
 {
     /**
      * @var QueueService
      */
     protected $queue;
 
-    /**
-     * @return QueueService
-     */
-    public function getQueue()
+    public function getQueue(): QueueService
     {
         return $this->queue;
     }
 
-    /**
-     * @param QueueService $queue
-     */
     public function setQueue(QueueService $queue)
     {
         $this->queue = $queue;

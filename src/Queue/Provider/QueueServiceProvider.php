@@ -1,11 +1,12 @@
 <?php
+declare(strict_types=1);
 
 namespace Linio\Component\Queue\Provider;
 
+use Linio\Component\Queue\AdapterFactory;
+use Linio\Component\Queue\QueueService;
 use Pimple\Container;
 use Pimple\ServiceProviderInterface;
-use Linio\Component\Queue\QueueService;
-use Linio\Component\Queue\AdapterFactory;
 
 class QueueServiceProvider implements ServiceProviderInterface
 {
