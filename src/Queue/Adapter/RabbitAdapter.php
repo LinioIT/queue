@@ -1,12 +1,13 @@
 <?php
+declare(strict_types=1);
 
 namespace Linio\Component\Queue\Adapter;
 
-use PhpAmqpLib\Connection\AMQPConnection;
-use PhpAmqpLib\Message\AMQPMessage;
-use PhpAmqpLib\Channel\AMQPChannel;
 use Linio\Component\Queue\AdapterInterface;
 use Linio\Component\Queue\Job;
+use PhpAmqpLib\Channel\AMQPChannel;
+use PhpAmqpLib\Connection\AMQPConnection;
+use PhpAmqpLib\Message\AMQPMessage;
 
 class RabbitAdapter implements AdapterInterface
 {
@@ -18,19 +19,13 @@ class RabbitAdapter implements AdapterInterface
     /**
      * @var array
      */
-    protected $config;
+    protected $config = [];
 
-    /**
-     * {@inheritdoc}
-     */
     public function __construct(array $config = [])
     {
         $this->config = $config;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function add(Job $job)
     {
         $this->getChannel()->queue_declare($job->getQueue(), true, $job->isPersistent(), false, false);
@@ -38,9 +33,6 @@ class RabbitAdapter implements AdapterInterface
         $this->getChannel()->basic_publish($message, '', $job->getQueue());
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function perform(Job $job)
     {
         $this->getChannel()->queue_declare($job->getQueue(), true, $job->isPersistent(), false, false);
@@ -61,10 +53,7 @@ class RabbitAdapter implements AdapterInterface
         }
     }
 
-    /**
-     * @return AMQPChannel
-     */
-    public function getChannel()
+    public function getChannel(): AMQPChannel
     {
         if (!$this->channel) {
             $connection = new AMQPConnection($this->config['host'], $this->config['port'], $this->config['username'], $this->config['password'], $this->config['vhost']);
@@ -74,9 +63,6 @@ class RabbitAdapter implements AdapterInterface
         return $this->channel;
     }
 
-    /**
-     * @param AMQPChannel $channel
-     */
     public function setChannel(AMQPChannel $channel)
     {
         $this->channel = $channel;

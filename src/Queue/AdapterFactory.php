@@ -1,19 +1,15 @@
 <?php
+declare(strict_types=1);
 
 namespace Linio\Component\Queue;
 
-use Linio\Component\Util\String;
+use Linio\Component\Util\Inflector;
 
 class AdapterFactory
 {
-    /**
-     * @param string $adapterName
-     * @param array $adapterConfig
-     * @return AdapterInterface
-     */
-    public function getAdapter($adapterName, $adapterConfig = array())
+    public function getAdapter(string $adapterName, array $adapterConfig = []): AdapterInterface
     {
-        $adapterClass = sprintf('%s\\Adapter\\%sAdapter', __NAMESPACE__, String::pascalize($adapterName));
+        $adapterClass = sprintf('%s\\Adapter\\%sAdapter', __NAMESPACE__, Inflector::pascalize($adapterName));
 
         if (!class_exists($adapterClass)) {
             throw new \InvalidArgumentException('Adapter class does not exist: ' . $adapterClass);

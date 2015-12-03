@@ -23,7 +23,7 @@ class RabbitAdapterTest extends \PHPUnit_Framework_TestCase
             ->getMock();
         $channelMock->expects($this->once())
             ->method('queue_declare')
-            ->with($this->equalTo('foobar'), $this->equalTo(false), $this->equalTo(false), $this->equalTo(false), $this->equalTo(false));
+            ->with($this->equalTo('foobar'), $this->equalTo(true), $this->equalTo(false), $this->equalTo(false), $this->equalTo(false));
         $channelMock->expects($this->once())
             ->method('basic_publish')
             ->with($this->equalTo($message), $this->equalTo(''), $this->equalTo('foobar'));
@@ -49,7 +49,7 @@ class RabbitAdapterTest extends \PHPUnit_Framework_TestCase
             ->getMock();
         $channelMock->expects($this->once())
             ->method('queue_declare')
-            ->with($this->equalTo('foobar'), $this->equalTo(false), $this->equalTo(false), $this->equalTo(false), $this->equalTo(false));
+            ->with($this->equalTo('foobar'), $this->equalTo(true), $this->equalTo(false), $this->equalTo(false), $this->equalTo(false));
         $channelMock->expects($this->once())
             ->method('basic_qos')
             ->with($this->equalTo(null), $this->equalTo(1), $this->equalTo(null));

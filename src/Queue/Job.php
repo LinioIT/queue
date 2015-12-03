@@ -1,11 +1,12 @@
 <?php
+declare(strict_types=1);
 
 namespace Linio\Component\Queue;
 
 abstract class Job
 {
     /**
-     * @var boolean
+     * @var bool
      */
     protected $status = false;
 
@@ -14,9 +15,6 @@ abstract class Job
      */
     protected $payload;
 
-    /**
-     * @param mixed $payload
-     */
     public function __construct($payload = null)
     {
         if (!$payload) {
@@ -26,42 +24,27 @@ abstract class Job
         $this->setPayload($payload);
     }
 
-    /**
-     * @return string
-     */
-    public function getQueue()
+    public function getQueue(): string
     {
         return get_class($this);
     }
 
-    /**
-     * @return mixed
-     */
     public function getPayload()
     {
         return $this->payload;
     }
 
-    /**
-     * @param mixed $payload
-     */
     public function setPayload($payload)
     {
         $this->payload = $payload;
     }
 
-    /**
-     * @return boolean
-     */
-    public function isPersistent()
+    public function isPersistent(): bool
     {
         return false;
     }
 
-    /**
-     * @return boolean
-     */
-    public function isFinished()
+    public function isFinished(): bool
     {
         return $this->status;
     }
@@ -76,8 +59,5 @@ abstract class Job
         $this->status = true;
     }
 
-    /**
-     * @return void
-     */
     abstract public function perform();
 }
