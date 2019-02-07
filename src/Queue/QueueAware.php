@@ -16,7 +16,7 @@ trait QueueAware
         return $this->queue;
     }
 
-    public function setQueue(QueueService $queue)
+    public function setQueue(QueueService $queue): void
     {
         $this->queue = $queue;
     }

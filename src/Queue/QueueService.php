@@ -47,7 +47,7 @@ class QueueService
         return true;
     }
 
-    protected function prepare(Job $job)
+    protected function prepare(Job $job): void
     {
         $payload = $job->getPayload();
 
@@ -56,12 +56,12 @@ class QueueService
         }
     }
 
-    public function setAdapter(AdapterInterface $adapter)
+    public function setAdapter(AdapterInterface $adapter): void
     {
         $this->adapter = $adapter;
     }
 
-    public function setLogger(LoggerInterface $logger)
+    public function setLogger(LoggerInterface $logger): void
     {
         $this->logger = $logger;
     }

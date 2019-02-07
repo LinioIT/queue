@@ -4,16 +4,16 @@ declare(strict_types=1);
 
 namespace Linio\Component\Queue;
 
-class QueueServiceTest extends \PHPUnit_Framework_TestCase
+class QueueServiceTest extends \PHPUnit\Framework\TestCase
 {
-    public function testIsAddingJob()
+    public function testIsAddingJob(): void
     {
-        $job = $this->getMockForAbstractClass('Linio\Component\Queue\Job');
+        $job = $this->getMockForAbstractClass('Linio\Component\Queue\Job', [], '', true, true, true, ['getPayload']);
         $job->expects($this->any())
             ->method('getPayload')
             ->willReturn('some content');
 
-        $adapterMock = $this->getMock('Linio\Component\Queue\AdapterInterface');
+        $adapterMock = $this->createMock('Linio\Component\Queue\AdapterInterface');
         $adapterMock->expects($this->once())
             ->method('add')
             ->with($this->equalTo($job));
@@ -24,7 +24,7 @@ class QueueServiceTest extends \PHPUnit_Framework_TestCase
         $this->assertTrue($queue->add($job));
     }
 
-    public function testIsAddingJobWithNonScalarPayload()
+    public function testIsAddingJobWithNonScalarPayload(): void
     {
         $job = $this->getMockForAbstractClass('Linio\Component\Queue\Job', [], '', true, true, true, ['getPayload', 'setPayload']);
         $job->expects($this->once())
@@ -34,7 +34,7 @@ class QueueServiceTest extends \PHPUnit_Framework_TestCase
             ->method('setPayload')
             ->with($this->equalTo('{}'));
 
-        $adapterMock = $this->getMock('Linio\Component\Queue\AdapterInterface');
+        $adapterMock = $this->createMock('Linio\Component\Queue\AdapterInterface');
         $adapterMock->expects($this->once())
             ->method('add')
             ->with($this->equalTo($job));
@@ -44,16 +44,16 @@ class QueueServiceTest extends \PHPUnit_Framework_TestCase
         $this->assertTrue($queue->add($job));
     }
 
-    public function testIsDetectingProblemWhenAddingJob()
+    public function testIsDetectingProblemWhenAddingJob(): void
     {
         $job = $this->getMockForAbstractClass('Linio\Component\Queue\Job');
 
-        $loggerMock = $this->getMock('Psr\Log\LoggerInterface');
+        $loggerMock = $this->createMock('Psr\Log\LoggerInterface');
         $loggerMock->expects($this->once())
             ->method('error')
             ->with($this->equalTo('[Queue] An error has occurred when adding job: Oops!'), $this->contains('Oops!'));
 
-        $adapterMock = $this->getMock('Linio\Component\Queue\AdapterInterface');
+        $adapterMock = $this->createMock('Linio\Component\Queue\AdapterInterface');
         $adapterMock->expects($this->once())
             ->method('add')
             ->with($job)
@@ -66,11 +66,11 @@ class QueueServiceTest extends \PHPUnit_Framework_TestCase
         $this->assertFalse($queue->add($job));
     }
 
-    public function testIsPerformingJob()
+    public function testIsPerformingJob(): void
     {
         $job = $this->getMockForAbstractClass('Linio\Component\Queue\Job');
 
-        $adapterMock = $this->getMock('Linio\Component\Queue\AdapterInterface');
+        $adapterMock = $this->createMock('Linio\Component\Queue\AdapterInterface');
         $adapterMock->expects($this->once())
             ->method('perform')
             ->with($this->equalTo($job));
@@ -80,16 +80,16 @@ class QueueServiceTest extends \PHPUnit_Framework_TestCase
         $this->assertTrue($queue->perform($job));
     }
 
-    public function testIsDetectingProblemWhenPerformingJob()
+    public function testIsDetectingProblemWhenPerformingJob(): void
     {
         $job = $this->getMockForAbstractClass('Linio\Component\Queue\Job');
 
-        $loggerMock = $this->getMock('Psr\Log\LoggerInterface');
+        $loggerMock = $this->createMock('Psr\Log\LoggerInterface');
         $loggerMock->expects($this->once())
             ->method('error')
             ->with($this->stringStartsWith('[Queue] An error has occurred while performing'), $this->contains('Oops!'));
 
-        $adapterMock = $this->getMock('Linio\Component\Queue\AdapterInterface');
+        $adapterMock = $this->createMock('Linio\Component\Queue\AdapterInterface');
         $adapterMock->expects($this->once())
             ->method('perform')
             ->with($job)

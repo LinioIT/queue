@@ -11,7 +11,7 @@ use Pimple\ServiceProviderInterface;
 
 class QueueServiceProvider implements ServiceProviderInterface
 {
-    public function register(Container $container)
+    public function register(Container $container): void
     {
         if (!isset($container['queue.adapter_name'])) {
             $container['queue.adapter_name'] = 'null';
@@ -19,9 +19,8 @@ class QueueServiceProvider implements ServiceProviderInterface
 
         $container['queue.adapter'] = $container->factory(function ($container) {
             $adapterFactory = new AdapterFactory();
-            $adapter = $adapterFactory->getAdapter($container['queue.adapter_name'], $container['queue.adapter_options']);
 
-            return $adapter;
+            return $adapterFactory->getAdapter($container['queue.adapter_name'], $container['queue.adapter_options']);
         });
 
         $container['queue.service'] = function ($container) {

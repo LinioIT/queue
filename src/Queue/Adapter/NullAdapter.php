@@ -13,11 +13,11 @@ class NullAdapter implements AdapterInterface
     {
     }
 
-    public function add(Job $job)
+    public function add(Job $job): void
     {
     }
 
-    public function perform(Job $job)
+    public function perform(Job $job): void
     {
     }
 }

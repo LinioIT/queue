@@ -6,9 +6,9 @@ namespace Linio\Component\Queue\Adapter;
 
 use PhpAmqpLib\Message\AMQPMessage;
 
-class RabbitAdapterTest extends \PHPUnit_Framework_TestCase
+class RabbitAdapterTest extends \PHPUnit\Framework\TestCase
 {
-    public function testIsAddingJob()
+    public function testIsAddingJob(): void
     {
         $job = $this->getMockForAbstractClass('Linio\Component\Queue\Job', [], '', false, false, true, ['getQueue', 'getPayload']);
         $job->expects($this->exactly(2))
@@ -39,7 +39,7 @@ class RabbitAdapterTest extends \PHPUnit_Framework_TestCase
         $this->assertNull($adapterMock->add($job));
     }
 
-    public function testIsPerformingJob()
+    public function testIsPerformingJob(): void
     {
         $job = $this->getMockForAbstractClass('Linio\Component\Queue\Job', [], '', false, false, true, ['getQueue', 'getPayload']);
         $job->expects($this->exactly(2))

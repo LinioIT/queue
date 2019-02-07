@@ -4,35 +4,35 @@ declare(strict_types=1);
 
 namespace Linio\Component\Queue;
 
-class JobTest extends \PHPUnit_Framework_TestCase
+class JobTest extends \PHPUnit\Framework\TestCase
 {
-    public function testIsCheckingPersistence()
+    public function testIsCheckingPersistence(): void
     {
         $job = $this->getMockForAbstractClass('Linio\Component\Queue\Job');
         $this->assertFalse($job->isPersistent());
     }
 
-    public function testIsGettingQueueName()
+    public function testIsGettingQueueName(): void
     {
         $job = $this->getMockForAbstractClass('Linio\Component\Queue\Job');
         $this->assertStringStartsWith('Mock_Job_', $job->getQueue());
     }
 
-    public function testIsSettingScalarPayload()
+    public function testIsSettingScalarPayload(): void
     {
         $job = $this->getMockForAbstractClass('Linio\Component\Queue\Job');
         $job->setPayload('foobar');
         $this->assertEquals('foobar', $job->getPayload());
     }
 
-    public function testIsConstructingWithPayload()
+    public function testIsConstructingWithPayload(): void
     {
         $job = $this->getMockForAbstractClass('Linio\Component\Queue\Job');
         $job->__construct('foobar');
         $this->assertEquals('foobar', $job->getPayload());
     }
 
-    public function testIsSettingStatus()
+    public function testIsSettingStatus(): void
     {
         $job = $this->getMockForAbstractClass('Linio\Component\Queue\Job');
         $job->finish();

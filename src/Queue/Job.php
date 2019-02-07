@@ -35,7 +35,7 @@ abstract class Job
         return $this->payload;
     }
 
-    public function setPayload($payload)
+    public function setPayload($payload): void
     {
         $this->payload = $payload;
     }
@@ -50,12 +50,12 @@ abstract class Job
         return $this->status;
     }
 
-    public function fail()
+    public function fail(): void
     {
         $this->status = false;
     }
 
-    public function finish()
+    public function finish(): void
     {
         $this->status = true;
     }

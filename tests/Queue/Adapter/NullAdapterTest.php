@@ -4,16 +4,16 @@ declare(strict_types=1);
 
 namespace Linio\Component\Queue\Adapter;
 
-class NullAdapterTest extends \PHPUnit_Framework_TestCase
+class NullAdapterTest extends \PHPUnit\Framework\TestCase
 {
-    public function testIsAddingJob()
+    public function testIsAddingJob(): void
     {
         $job = $this->getMockForAbstractClass('Linio\Component\Queue\Job');
         $adapter = new NullAdapter();
         $this->assertNull($adapter->add($job));
     }
 
-    public function testIsPerformingJob()
+    public function testIsPerformingJob(): void
     {
         $job = $this->getMockForAbstractClass('Linio\Component\Queue\Job');
         $adapter = new NullAdapter();
