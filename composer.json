@@ -5,7 +5,7 @@
     "type": "library",
     "license": "BSD-3-Clause",
     "require": {
-        "php": ">=7.0",
+        "php": ">=7.1",
         "psr/log": "^1.0",
         "linio/util": "^2.0",
         "php-amqplib/php-amqplib": "^2.6"
