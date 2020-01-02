@@ -4,7 +4,9 @@ declare(strict_types=1);
 
 namespace Linio\Component\Queue;
 
-class AdapterFactoryTest extends \PHPUnit\Framework\TestCase
+use PHPUnit\Framework\TestCase;
+
+class AdapterFactoryTest extends TestCase
 {
     public function testIsGettingAdapter(): void
     {

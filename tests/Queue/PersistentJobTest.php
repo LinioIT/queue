@@ -4,7 +4,9 @@ declare(strict_types=1);
 
 namespace Linio\Component\Queue;
 
-class PersistentJobTest extends \PHPUnit\Framework\TestCase
+use PHPUnit\Framework\TestCase;
+
+class PersistentJobTest extends TestCase
 {
     public function testIsCheckingPersistence(): void
     {

@@ -12,15 +12,8 @@ use PhpAmqpLib\Message\AMQPMessage;
 
 class RabbitAdapter implements AdapterInterface
 {
-    /**
-     * @var AMQPChannel
-     */
-    protected $channel;
-
-    /**
-     * @var array
-     */
-    protected $config = [];
+    protected ?AMQPChannel $channel = null;
+    protected array $config = [];
 
     public function __construct(array $config = [])
     {
@@ -37,7 +30,7 @@ class RabbitAdapter implements AdapterInterface
     public function perform(Job $job): void
     {
         $this->getChannel()->queue_declare($job->getQueue(), true, $job->isPersistent(), false, false);
-        $this->getChannel()->basic_qos(null, 1, null);
+        $this->getChannel()->basic_qos(0, 1, false);
         $this->getChannel()->basic_consume($job->getQueue(), '', false, false, false, false, function ($message) use ($job): void {
             $job->setPayload($message->body);
             $job->perform();
@@ -45,7 +38,7 @@ class RabbitAdapter implements AdapterInterface
             if ($job->isFinished()) {
                 $message->delivery_info['channel']->basic_ack($message->delivery_info['delivery_tag']);
             } else {
-                $this->channel->basic_nack($message->delivery_info['delivery_tag'], false, true);
+                $this->getChannel()->basic_nack($message->delivery_info['delivery_tag'], false, true);
             }
         });
 

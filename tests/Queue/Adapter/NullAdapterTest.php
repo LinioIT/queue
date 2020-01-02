@@ -4,7 +4,9 @@ declare(strict_types=1);
 
 namespace Linio\Component\Queue\Adapter;
 
-class NullAdapterTest extends \PHPUnit\Framework\TestCase
+use PHPUnit\Framework\TestCase;
+
+class NullAdapterTest extends TestCase
 {
     public function testIsAddingJob(): void
     {

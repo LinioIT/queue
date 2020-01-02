@@ -5,8 +5,9 @@ declare(strict_types=1);
 namespace Linio\Component\Queue\Adapter;
 
 use PhpAmqpLib\Message\AMQPMessage;
+use PHPUnit\Framework\TestCase;
 
-class RabbitAdapterTest extends \PHPUnit\Framework\TestCase
+class RabbitAdapterTest extends TestCase
 {
     public function testIsAddingJob(): void
     {

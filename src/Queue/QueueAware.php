@@ -6,10 +6,7 @@ namespace Linio\Component\Queue;
 
 trait QueueAware
 {
-    /**
-     * @var QueueService
-     */
-    protected $queue;
+    protected QueueService $queue;
 
     public function getQueue(): QueueService
     {
