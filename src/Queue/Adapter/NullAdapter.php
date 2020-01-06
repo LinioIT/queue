@@ -9,8 +9,11 @@ use Linio\Component\Queue\Job;
 
 class NullAdapter implements AdapterInterface
 {
+    protected array $config;
+
     public function __construct(array $config = [])
     {
+        $this->config = $config;
     }
 
     public function add(Job $job): void

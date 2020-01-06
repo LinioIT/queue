@@ -4,27 +4,29 @@ declare(strict_types=1);
 
 namespace Linio\Component\Queue;
 
+use Exception;
+use Linio\Component\Queue\Adapter\NullAdapter;
 use Linio\Component\Util\Json;
 use Psr\Log\LoggerInterface;
+use Psr\Log\NullLogger;
 
 class QueueService
 {
-    /**
-     * @var AdapterInterface
-     */
-    protected $adapter;
+    protected AdapterInterface $adapter;
+    protected LoggerInterface $logger;
 
-    /**
-     * @var LoggerInterface
-     */
-    protected $logger;
+    public function __construct()
+    {
+        $this->adapter = new NullAdapter();
+        $this->logger = new NullLogger();
+    }
 
     public function add(Job $job): bool
     {
         try {
             $this->prepare($job);
             $this->adapter->add($job);
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             $this->logger->error('[Queue] An error has occurred when adding job: ' . $e->getMessage(), (array) $e);
 
             return false;
@@ -37,7 +39,7 @@ class QueueService
     {
         try {
             $this->adapter->perform($job);
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             $message = sprintf('[Queue] An error has occurred while performing "%s": %s', get_class($job), $e->getMessage());
             $this->logger->error($message, (array) $e);
 

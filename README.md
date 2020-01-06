@@ -12,7 +12,7 @@ The recommended way to install Linio Queue is [through composer](http://getcompo
 ```JSON
 {
     "require": {
-        "linio/queue": "~1.0"
+        "linio/queue": "~3.0"
     }
 }
 ```
@@ -35,21 +35,19 @@ Silex, a service provider is included. Just register it:
 ```php
 <?php
 
-$app->register(new \Linio\Component\Queue\Provider\QueueServiceProvider(), [
-    'queue.adapter_name' => 'rabbit',
-    'queue.adapter_options' => [
-        'host' => 'localhost',
-        'port' => 5672,
-        'username' => 'guest',
-        'password' => 'guest',
-        'vhost' => '/'
-    ],
-]);
+use Linio\Component\Queue\QueueService;
+use Linio\Component\Queue\Adapter;
+
+$queue = new QueueService();
+$queue->setAdapter(new Adapter\RabbitAdapter([
+    'host' => 'localhost',
+    'port' => 5672,
+    'username' => 'guest',
+    'password' => 'guest',
+    'vhost' => '/'
+]));
 
 ```
-
-Note that must provide an adapter name and an array of options. Each adapter
-has different configuration options that are injected by the `AdapterFactory`.
 
 In order to create a work queue, you must extend the abstract class `Job`:
 

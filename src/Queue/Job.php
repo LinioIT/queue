@@ -6,16 +6,16 @@ namespace Linio\Component\Queue;
 
 abstract class Job
 {
-    /**
-     * @var bool
-     */
-    protected $status = false;
+    protected bool $status = false;
 
     /**
      * @var mixed
      */
-    protected $payload;
+    protected $payload = null;
 
+    /**
+     * @param mixed $payload
+     */
     public function __construct($payload = null)
     {
         if (!$payload) {
@@ -30,11 +30,17 @@ abstract class Job
         return get_class($this);
     }
 
+    /**
+     * @return mixed
+     */
     public function getPayload()
     {
         return $this->payload;
     }
 
+    /**
+     * @param mixed $payload
+     */
     public function setPayload($payload): void
     {
         $this->payload = $payload;
@@ -60,5 +66,5 @@ abstract class Job
         $this->status = true;
     }
 
-    abstract public function perform();
+    abstract public function perform(): void;
 }

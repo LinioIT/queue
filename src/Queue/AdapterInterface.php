@@ -8,7 +8,7 @@ interface AdapterInterface
 {
     public function __construct(array $config);
 
-    public function add(Job $job);
+    public function add(Job $job): void;
 
-    public function perform(Job $job);
+    public function perform(Job $job): void;
 }
