@@ -53,7 +53,7 @@ class QueueServiceTest extends TestCase
         $loggerMock = $this->createMock('Psr\Log\LoggerInterface');
         $loggerMock->expects($this->once())
             ->method('error')
-            ->with($this->equalTo('[Queue] An error has occurred when adding job: Oops!'), $this->contains('Oops!'));
+            ->with($this->equalTo('[Queue] An error has occurred when adding job: Oops!'), $this->containsEqual('Oops!'));
 
         $adapterMock = $this->createMock('Linio\Component\Queue\AdapterInterface');
         $adapterMock->expects($this->once())
@@ -89,7 +89,7 @@ class QueueServiceTest extends TestCase
         $loggerMock = $this->createMock('Psr\Log\LoggerInterface');
         $loggerMock->expects($this->once())
             ->method('error')
-            ->with($this->stringStartsWith('[Queue] An error has occurred while performing'), $this->contains('Oops!'));
+            ->with($this->stringStartsWith('[Queue] An error has occurred while performing'), $this->containsEqual('Oops!'));
 
         $adapterMock = $this->createMock('Linio\Component\Queue\AdapterInterface');
         $adapterMock->expects($this->once())

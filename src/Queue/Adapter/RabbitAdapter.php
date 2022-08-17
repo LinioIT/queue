@@ -7,7 +7,7 @@ namespace Linio\Component\Queue\Adapter;
 use Linio\Component\Queue\AdapterInterface;
 use Linio\Component\Queue\Job;
 use PhpAmqpLib\Channel\AMQPChannel;
-use PhpAmqpLib\Connection\AMQPConnection;
+use PhpAmqpLib\Connection\AMQPStreamConnection;
 use PhpAmqpLib\Message\AMQPMessage;
 
 class RabbitAdapter implements AdapterInterface
@@ -50,7 +50,7 @@ class RabbitAdapter implements AdapterInterface
     public function getChannel(): AMQPChannel
     {
         if (!$this->channel) {
-            $connection = new AMQPConnection($this->config['host'], $this->config['port'], $this->config['username'], $this->config['password'], $this->config['vhost']);
+            $connection = new AMQPStreamConnection($this->config['host'], $this->config['port'], $this->config['username'], $this->config['password'], $this->config['vhost']);
             $this->channel = $connection->channel();
         }
 
